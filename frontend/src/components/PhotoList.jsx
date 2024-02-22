@@ -4,12 +4,16 @@ import photos from "mocks/photos";
 import PhotoListItem from "./PhotoListItem";
 import "../styles/PhotoList.scss";
 
+const PhotoList = ({favPhotos, toggleFavourite}) => {
 
-const photoListDetails = photos.map((photoObj) => {
-  return <PhotoListItem key={photoObj.id} photoInfo={photoObj}/>
-})
+  const photoListDetails = photos.map((photoObj) => {
+    return <PhotoListItem key={photoObj.id} 
+    photoInfo={photoObj} 
+    isFavourited={favPhotos.find(ph => ph.id === photoObj.id) } 
+    toggleFavourite={toggleFavourite}
+    />
+  })
 
-const PhotoList = () => {
   return (
     <ul className="photo-list">
       {photoListDetails}

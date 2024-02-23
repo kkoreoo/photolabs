@@ -1,5 +1,6 @@
 import React from 'react';
 import HomeRoute from 'routes/HomeRoute';
+import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 import { useState } from 'react';
 
 import './App.scss';
@@ -8,6 +9,8 @@ import './App.scss';
 const App = () => {
 
   const [favPhotos, setFavPhotos] = useState([]);
+  const [modalActive, setModalActive] = useState(false);
+
 
   const toggleFavourite = (photo) => {
     const isFavourited = favPhotos.find((ph => ph.id === photo.id));
@@ -21,7 +24,12 @@ const App = () => {
 
   return (
     <div className="App">
-      <HomeRoute favPhotos={favPhotos} toggleFavourite={toggleFavourite}/>
+      {modalActive && <PhotoDetailsModal />} 
+      <HomeRoute favPhotos={favPhotos} 
+      toggleFavourite={toggleFavourite} 
+      modalActive={modalActive} 
+      setModalActive={setModalActive}
+      />
     </div>
   );
 };

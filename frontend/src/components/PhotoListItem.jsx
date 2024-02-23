@@ -5,9 +5,13 @@ import "../styles/PhotoListItem.scss";
 
 
 const PhotoListItem = (props) => {
-  
+
+  const clickHandler = () => {
+    return props.setModalActive('true');
+  }
+
   return (
-    <section key={props.photoInfo.id} className="photo-list__item">
+    <section key={props.photoInfo.id} className="photo-list__item" onClick={clickHandler}>
       <PhotoFavButton isFavourited={props.isFavourited} toggleFavourite={() => props.toggleFavourite(props.photoInfo)}/>
       <img className="photo-list__image" src={props.photoInfo.urls.full} />
       <div className="photo-list__user-details">

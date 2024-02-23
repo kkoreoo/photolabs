@@ -5,6 +5,7 @@ import PhotoList from '../components/PhotoList';
 import '../styles/HomeRoute.scss';
 
 const HomeRoute = ({favPhotos, toggleFavourite, modalActive, setModalActive}) => {
+
   return (
     <div className="home-route">
       <TopNavigation favPhotos={favPhotos} />

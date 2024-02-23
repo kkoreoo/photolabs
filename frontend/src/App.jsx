@@ -11,7 +11,6 @@ const App = () => {
   const [favPhotos, setFavPhotos] = useState([]);
   const [modalActive, setModalActive] = useState(false);
 
-
   const toggleFavourite = (photo) => {
     const isFavourited = favPhotos.find((ph => ph.id === photo.id));
     if (isFavourited) {
@@ -24,7 +23,7 @@ const App = () => {
 
   return (
     <div className="App">
-      {modalActive && <PhotoDetailsModal />} 
+      {modalActive && <PhotoDetailsModal setModalActive={setModalActive}/>} 
       <HomeRoute favPhotos={favPhotos} 
       toggleFavourite={toggleFavourite} 
       modalActive={modalActive} 

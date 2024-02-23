@@ -9,7 +9,7 @@ import './App.scss';
 const App = () => {
 
   const [favPhotos, setFavPhotos] = useState([]);
-  const [modalActive, setModalActive] = useState(false);
+  const [photoModal, setPhotoModal] = useState();
 
   const toggleFavourite = (photo) => {
     const isFavourited = favPhotos.find((ph => ph.id === photo.id));
@@ -23,11 +23,11 @@ const App = () => {
 
   return (
     <div className="App">
-      {modalActive && <PhotoDetailsModal setModalActive={setModalActive}/>} 
+      {photoModal && <PhotoDetailsModal photoModal={photoModal} setPhotoModal={setPhotoModal}/>} 
       <HomeRoute favPhotos={favPhotos} 
       toggleFavourite={toggleFavourite} 
-      modalActive={modalActive} 
-      setModalActive={setModalActive}
+      photoModal={photoModal} 
+      setPhotoModal={setPhotoModal}
       />
     </div>
   );

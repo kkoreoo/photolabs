@@ -1,13 +1,14 @@
 import React from 'react';
 
-import '../styles/PhotoDetailsModal.scss'
+import '../styles/PhotoDetailsModal.scss';
 import closeSymbol from '../assets/closeSymbol.svg';
 
 const PhotoDetailsModal = (props) => {
 
   const closeModal = () => {
-   props.setModalActive(false);
-  }
+    console.log(props.photoModal);
+    props.setPhotoModal();
+  };
 
   return (
     <div className="photo-details-modal">
@@ -15,7 +16,7 @@ const PhotoDetailsModal = (props) => {
         <img src={closeSymbol} alt="close symbol" onClick={closeModal} />
       </button>
     </div>
-  )
+  );
 };
 
 export default PhotoDetailsModal;

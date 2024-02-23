@@ -6,19 +6,26 @@ import "../styles/PhotoListItem.scss";
 
 const PhotoListItem = (props) => {
 
+  const {
+    isFavourited,
+    photoInfo,
+    toggleFavourite,
+  } = props;
+
+
   const openModal = () => {
-    props.setModalActive('true');
+    props.setPhotoModal(photoInfo);
   }
 
   return (
-    <section key={props.photoInfo.id} className="photo-list__item" >
-      <PhotoFavButton isFavourited={props.isFavourited} toggleFavourite={() => props.toggleFavourite(props.photoInfo)}/>
-      <img className="photo-list__image" src={props.photoInfo.urls.full} onClick={openModal} />
+    <section key={photoInfo.id} className="photo-list__item" >
+      <PhotoFavButton isFavourited={isFavourited} toggleFavourite={() => toggleFavourite(photoInfo)}/>
+      <img className="photo-list__image" src={photoInfo.urls.full} onClick={openModal} />
       <div className="photo-list__user-details">
-        <img className="photo-list__user-profile" src={props.photoInfo.user.profile} />
+        <img className="photo-list__user-profile" src={photoInfo.user.profile} />
         <div className="photo-list__user-info">
-          <h3>{props.photoInfo.user.name}</h3>
-          <h3 className="photo-list__user-location">{`${props.photoInfo.location.city}, ${props.photoInfo.location.country}`}</h3>
+          <h3>{photoInfo.user.name}</h3>
+          <h3 className="photo-list__user-location">{`${photoInfo.location.city}, ${photoInfo.location.country}`}</h3>
         </div>
       </div>
     </section>

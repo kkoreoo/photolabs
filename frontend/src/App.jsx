@@ -9,38 +9,22 @@ import './App.scss';
 const App = () => {
 
   const { 
-    favPhotos, 
+    state, 
     toggleFavourite, 
-    photoModal, 
     toggleModalForSelectedPhoto, 
   } = useApplicationData()
 
-  // const [favPhotos, setFavPhotos] = useState([]);
-  // const [photoModal, setPhotoModal] = useState();
-
-  // const toggleFavourite = (photo) => {
-
-  //   const isFavourited = favPhotos.find((ph => ph.id === photo.id));
-    
-  //   if (isFavourited) {
-  //     setFavPhotos((prev) => prev.filter((ph) => ph.id !== photo.id));
-  //   } else {
-  //     // Add photo to favPhotos Array
-  //     setFavPhotos((prev) => [...prev, photo]);
-  //   }
-  // };
-
   return (
     <div className="App">
-      {photoModal && <PhotoDetailsModal
-        photoModal={photoModal}
+      {state.photoModal && <PhotoDetailsModal
+        photoModal={state.photoModal}
         toggleModalForSelectedPhoto={toggleModalForSelectedPhoto}
         toggleFavourite={toggleFavourite}
-        favPhotos={favPhotos.find(ph => ph.id === photoModal.id)}
+        favPhotos={state.favPhotos.find(ph => ph.id === state.photoModal.id)}
       />}
-      <HomeRoute favPhotos={favPhotos}
+      <HomeRoute favPhotos={state.favPhotos}
         toggleFavourite={toggleFavourite}
-        photoModal={photoModal}
+        photoModal={state.photoModal}
         toggleModalForSelectedPhoto={toggleModalForSelectedPhoto}
       />
     </div>

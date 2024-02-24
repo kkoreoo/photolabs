@@ -4,7 +4,7 @@ import PhotoList from '../components/PhotoList';
 
 import '../styles/HomeRoute.scss';
 
-const HomeRoute = ({favPhotos, toggleFavourite, photoModal, toggleModalForSelectedPhoto}) => {
+const HomeRoute = ({favPhotos, toggleFavourite, photoModal, toggleModalForSelectedPhoto, ACTIONS}) => {
 
   return (
     <div className="home-route">

@@ -19,15 +19,20 @@ const App = () => {
       // Add photo to favPhotos Array
       setFavPhotos((prev) => [...prev, photo]);
     }
-  }
+  };
 
   return (
     <div className="App">
-      {photoModal && <PhotoDetailsModal photoModal={photoModal} setPhotoModal={setPhotoModal}/>} 
-      <HomeRoute favPhotos={favPhotos} 
-      toggleFavourite={toggleFavourite} 
-      photoModal={photoModal} 
-      setPhotoModal={setPhotoModal}
+      {photoModal && <PhotoDetailsModal
+        photoModal={photoModal}
+        setPhotoModal={setPhotoModal}
+        toggleFavourite={toggleFavourite}
+        favPhotos={favPhotos.find(ph => ph.id === photoModal.id)}
+      />}
+      <HomeRoute favPhotos={favPhotos}
+        toggleFavourite={toggleFavourite}
+        photoModal={photoModal}
+        setPhotoModal={setPhotoModal}
       />
     </div>
   );

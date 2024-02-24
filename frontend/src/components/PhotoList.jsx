@@ -4,7 +4,7 @@ import photos from "mocks/photos";
 import PhotoListItem from "./PhotoListItem";
 import "../styles/PhotoList.scss";
 
-const PhotoList = ({favPhotos, toggleFavourite, photoModal, setPhotoModal}) => {
+const PhotoList = ({favPhotos, toggleFavourite, photoModal, toggleModalForSelectedPhoto}) => {
 
   const photoListDetails = photos.map((photoObj) => {
     return <PhotoListItem key={photoObj.id} 
@@ -12,7 +12,7 @@ const PhotoList = ({favPhotos, toggleFavourite, photoModal, setPhotoModal}) => {
     isFavourited={favPhotos.find(ph => ph.id === photoObj.id)} 
     toggleFavourite={toggleFavourite}
     photoModal={photoModal}
-    setPhotoModal={setPhotoModal}
+    toggleModalForSelectedPhoto={toggleModalForSelectedPhoto}
     />
   })
 

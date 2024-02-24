@@ -14,7 +14,7 @@ const PhotoListItem = (props) => {
 
 
   const openModal = () => {
-    props.setPhotoModal(photoInfo);
+    props.toggleModalForSelectedPhoto(photoInfo);
   }
 
   return (

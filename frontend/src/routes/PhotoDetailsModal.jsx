@@ -10,7 +10,7 @@ import closeSymbol from '../assets/closeSymbol.svg';
 const PhotoDetailsModal = (props) => {
 
   const closeModal = () => {
-    props.setPhotoModal();
+    props.toggleModalForSelectedPhoto();
   };
 
   const similarPhotos = Object.keys(props.photoModal.similar_photos).map((photo) => {
@@ -19,6 +19,7 @@ const PhotoDetailsModal = (props) => {
       photoInfo={similarPhotoInfo}
       isFavourited={props.favPhotos}
       toggleFavourite={props.toggleFavourite}
+      toggleModalForSelectedPhoto={props.toggleModalForSelectedPhoto}
     />;
   });
 

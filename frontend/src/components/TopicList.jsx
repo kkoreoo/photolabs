@@ -4,10 +4,10 @@ import TopicListItem from "./TopicListItem";
 import "../styles/TopicList.scss";
 
 
-const TopicList = ({topicData}) => {
+const TopicList = ({topicData, togglePhotosByTopic}) => {
 
   const topicListItemInfo = topicData.map((topicObj) => {
-    return <TopicListItem key={topicObj.id} topicInfo={topicObj}/>
+    return <TopicListItem key={topicObj.id} topicInfo={topicObj} togglePhotosByTopic={togglePhotosByTopic}/>
   })  
 
   return (

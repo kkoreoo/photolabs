@@ -1,11 +1,13 @@
 import React from "react";
-import { useReducer } from "react";
+import { useReducer, useEffect } from "react";
 
 const useApplicationData = () => {
 
   const initialState = {
     favPhotos: [],
     photoModal: null,
+    photoData: [],
+    topicData: [],
   }
 
   const ACTIONS = {
@@ -13,34 +15,78 @@ const useApplicationData = () => {
     FAV_PHOTO_REMOVED: 'FAV_PHOTO_REMOVED',
     SELECT_PHOTO: 'SELECT_PHOTO',
     CLOSE_SELECT_PHOTO: 'CLOSE_SELECT_PHOTO',
+    SET_PHOTO_DATA: 'SET_PHOTO_DATA',
+    SET_TOPIC_DATA: 'SET_TOPIC_DATA',
   }
+
+  // Fetches photodata from db
+  useEffect(() => {
+    fetch('http://localhost:8001/api/photos')
+    .then((res) => res.json())
+    .then((data) => {
+      dispatch({
+      type: ACTIONS.SET_PHOTO_DATA,
+      payload: data
+    })})
+    .catch(error => console.log('Error', error));
+  }, [])
+
+  // Fetches topicData from db
+  useEffect(() => {
+    fetch('http://localhost:8001/api/topics')
+    .then((res) => res.json())
+    .then((data) => {
+      dispatch({
+        type: ACTIONS.SET_TOPIC_DATA,
+        payload: data
+      })
+    })
+    .catch(error => console.log('Error', error));
+  }, [])
 
   // action will be an object {type: "", payload: "what we want to add"}
   const reducer = (state, action) => {
     switch (action.type) {
 
+      // Adds photo to favPhoto State
       case ACTIONS.FAV_PHOTO_ADDED:
         return {
           ...state,
           favPhotos: [action.payload, ...state.favPhotos],
         }
-
+  
+      // Removes photo to favPhoto State
       case ACTIONS.FAV_PHOTO_REMOVED:
         return {
           ...state,
           favPhotos: state.favPhotos.filter(item => action.payload !== item),
         }
 
+      // Opens selected photo to in modal
       case ACTIONS.SELECT_PHOTO:
         return {
           ...state,
           photoModal: action.payload,
         }
 
+      // Closes modal of selected photo
       case ACTIONS.CLOSE_SELECT_PHOTO:
         return {
           ...state,
-          photoModal: action.paylod,
+          photoModal: action.payload,
+        }
+
+      // Retrieval of data from db
+      case ACTIONS.SET_PHOTO_DATA:
+        return {
+          ...state,
+          photoData: action.payload
+        }
+
+      case ACTIONS.SET_TOPIC_DATA:
+        return {
+          ...state,
+          topicData: action.payload,
         }
 
       default: 

@@ -26,6 +26,8 @@ const App = () => {
         toggleFavourite={toggleFavourite}
         photoModal={state.photoModal}
         toggleModalForSelectedPhoto={toggleModalForSelectedPhoto}
+        photoData={state.photoData}
+        topicData={state.topicData}
       />
     </div>
   );

@@ -21,9 +21,10 @@ const App = () => {
         photoModal={state.photoModal}
         toggleModalForSelectedPhoto={toggleModalForSelectedPhoto}
         toggleFavourite={toggleFavourite}
-        favPhotos={state.favPhotos.find(ph => ph.id === state.photoModal.id)}
+        favPhotos={state.favPhotos}
       />}
-      <HomeRoute favPhotos={state.favPhotos}
+      <HomeRoute 
+        favPhotos={state.favPhotos}
         toggleFavourite={toggleFavourite}
         photoModal={state.photoModal}
         toggleModalForSelectedPhoto={toggleModalForSelectedPhoto}

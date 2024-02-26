@@ -2,6 +2,7 @@
 The PhotoLabs project for the Web Development React course programming.
 
 # Photolabs
+This is photolabs! You'll see a display of photos posted by various users from all over the Canada! You can filter the photos displayed by certain topics and can even favourite the photos you like the most!
 
 ## Setup
 

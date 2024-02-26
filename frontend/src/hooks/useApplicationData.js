@@ -1,4 +1,3 @@
-import React from "react";
 import { useReducer, useEffect } from "react";
 
 const useApplicationData = () => {
@@ -20,6 +19,7 @@ const useApplicationData = () => {
     SET_TOPIC_DATA: 'SET_TOPIC_DATA',
     GET_PHOTOS_BY_TOPIC: 'GET_PHOTOS_BY_TOPIC',
     SET_TOPIC_ID: 'SET_TOPIC_ID',
+    REMOVE_TOPIC_ID: 'REMOVE_TOPIC_ID',
   };
 
   // action will be an object {type: "", payload: "what we want to add"}
@@ -81,17 +81,28 @@ const useApplicationData = () => {
           ...state,
           topicId: action.payload,
         };
+      
+      case ACTIONS.REMOVE_TOPIC_ID:
+        return {
+          ...state,
+          photoData: [],
+          topicId: action.payload,
+        }
 
       default:
-        throw new Error(`Not an appropriate action, try something else`);
+        throw new Error(`${action.type} is not an recognized action, try something else`);
     }
   };
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState, initial => {
+    const savedFavPhotos = localStorage.getItem('favPhotos');
+    return savedFavPhotos ? {...initial, favPhotos: JSON.parse(savedFavPhotos)} : initial;
+  });
 
   // Fetches photodata from db
   useEffect(() => {
-    fetch('http://localhost:8001/api/photos')
+    if(state.topicId === null){
+      fetch('/api/photos')
       .then((res) => res.json())
       .then((data) => {
         dispatch({
@@ -100,11 +111,12 @@ const useApplicationData = () => {
         });
       })
       .catch(error => console.log('Error', error));
-  }, []);
+    }
+  }, [state.topicId]);
 
   // Fetches topicData from db
   useEffect(() => {
-    fetch('http://localhost:8001/api/topics')
+    fetch('/api/topics')
       .then((res) => res.json())
       .then((data) => {
         dispatch({
@@ -118,14 +130,20 @@ const useApplicationData = () => {
   //Fetch Photos by topics
   useEffect(() => {
     const topicId = state.topicId;
-    console.log('topicId', topicId);
     if (topicId) {
       fetchPhotosByTopic(topicId);
     }
   }, [state.topicId]);
 
+  // Save favPhotos to local storage
+  useEffect(() => {
+    const savedFavPhotos = JSON.stringify(state.favPhotos);
+    localStorage.setItem('favPhotos', savedFavPhotos);
+  }, [state.favPhotos]);
+
+
   const fetchPhotosByTopic = (topicId) => {
-    fetch(`http://localhost:8001/api/topics/photos/${topicId}`)
+    fetch(`/api/topics/photos/${topicId}`)
       .then((res) => res.json())
       .then((data) => {
         dispatch({
@@ -136,26 +154,23 @@ const useApplicationData = () => {
       .catch(error => console.log('Error', error));
   };
 
-
-  const toggleFavourite = (photo) => {
-    const isFavourited = state.favPhotos.find((ph) => ph.id === photo.id);
+  const toggleFavourite = (photoId) => {
+    const isFavourited = state.favPhotos.find((id) => id === photoId);
 
     if (isFavourited) {
       dispatch({
         type: ACTIONS.FAV_PHOTO_REMOVED,
-        payload: photo,
+        payload: photoId,
       });
     } else {
       dispatch({
         type: ACTIONS.FAV_PHOTO_ADDED,
-        payload: photo,
+        payload: photoId,
       });
     }
   };
 
-
   const toggleModalForSelectedPhoto = (photo) => {
-
     if (!photo) {
       dispatch({
         type: ACTIONS.CLOSE_SELECT_PHOTO,
@@ -170,10 +185,19 @@ const useApplicationData = () => {
   };
 
   const togglePhotosByTopic = (topic) => {
-    dispatch({
-      type: ACTIONS.SET_TOPIC_ID,
-      payload: topic
-    });
+    // If no topic selected or topic selected is different from displayed topic -> display that topic
+    if (!topic || topic !== state.topicId) {
+      dispatch({
+        type: ACTIONS.SET_TOPIC_ID,
+        payload: topic,
+      });
+    // Clicking the logo will go back to a unfiltered view
+    } else if (topic === null) {
+      dispatch({
+        type: ACTIONS.REMOVE_TOPIC_ID,
+        payload: null,
+      });
+    } 
   };
 
 

@@ -4,23 +4,16 @@ import "../styles/PhotoListItem.scss";
 
 
 
-const PhotoListItem = (props) => {
-
-  const {
-    isFavourited,
-    photoInfo,
-    toggleFavourite,
-  } = props;
-
+const PhotoListItem = ({ isFavourited, photoInfo, toggleFavourite, toggleModalForSelectedPhoto }) => {
 
   const openModal = () => {
-    props.toggleModalForSelectedPhoto(photoInfo);
+    toggleModalForSelectedPhoto(photoInfo);
   }
 
   return (
     <section key={photoInfo.id} className="photo-list__item" >
-      <PhotoFavButton isFavourited={isFavourited} toggleFavourite={() => toggleFavourite(photoInfo)}/>
-      <img className="photo-list__image" src={photoInfo.urls.full} onClick={openModal} />
+      <PhotoFavButton isFavourited={isFavourited} toggleFavourite={() => toggleFavourite(photoInfo.id)}/>
+      <img className="photo-list__image" src={photoInfo.urls.regular} onClick={openModal} />
       <div className="photo-list__user-details">
         <img className="photo-list__user-profile" src={photoInfo.user.profile} />
         <div className="photo-list__user-info">

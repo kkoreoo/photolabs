@@ -13,11 +13,12 @@ const PhotoDetailsModal = (props) => {
     props.toggleModalForSelectedPhoto();
   };
 
+  // Iterates over the similar photos and populates them below the selected photo
   const similarPhotos = Object.keys(props.photoModal.similar_photos).map((photo) => {
     const similarPhotoInfo = props.photoModal.similar_photos[photo];
     return <PhotoListItem key={similarPhotoInfo.id}
       photoInfo={similarPhotoInfo}
-      isFavourited={props.favPhotos}
+      isFavourited={props.favPhotos.find(id => id === similarPhotoInfo.id)}
       toggleFavourite={props.toggleFavourite}
       toggleModalForSelectedPhoto={props.toggleModalForSelectedPhoto}
     />;
@@ -31,8 +32,8 @@ const PhotoDetailsModal = (props) => {
       </button>
 
       <section className='photo-details-modal__container'>
-        <PhotoFavButton isFavourited={props.favPhotos} toggleFavourite={() => props.toggleFavourite(props.photoModal)} />
-        <img className='photo-details-modal__image' src={props.photoModal.urls.regular} />
+        <PhotoFavButton isFavourited={props.favPhotos.find(id => id === props.photoModal.id)} toggleFavourite={() => props.toggleFavourite(props.photoModal.id)} />
+        <img className='photo-details-modal__image' src={props.photoModal.urls.full} />
         <div className='photo-details-modal__photographer-details'>
           <img className='photo-details-modal__photographer-profile' src={props.photoModal.user.profile} />
           <div className='photo-details-modal__photographer-info'>
